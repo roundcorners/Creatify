@@ -1,26 +1,16 @@
-
-"use strict";
-
-Creatify.namespace('Creatify.dom');
-
-Creatify.dom.Popouts = function(container) {
-    Creatify.dom.Popouts.pods.push(container);
+Creatify.homeMove.Popouts = function(container) {
     
-    this.pod = $(container);
-    this.helpBtn = this.pod.find('a.help').eq(0);
-    this.inputs = this.pod.find(':input:not(:image, :radio)');
-    this.radios = this.pod.find('input[type="radio"]');
-    
+    Creatify.homeMove.Popouts.containerList.push(container);
+    this.container = $(container);
+    this.helpBtn = this.container.find('a.help').eq(0);
+    this.inputs = this.container.find(':input:not(:image, :radio)');
+    this.radios = this.container.find('input[type="radio"]');
     this.setupEventListeners();
-    
-    if (Creatify.dom.Popouts.pods[0]) {
-        this.errorCheck();
-    }
 };
 
-Creatify.dom.Popouts.pods = [];
+Creatify.homeMove.Popouts.containerList = [];
 
-Creatify.dom.Popouts.prototype = {
+Creatify.homeMove.Popouts.prototype = {
         
     setupEventListeners: function() {
         this.helpBtn.bind('click', $.proxy(this.toggleThisHelp, this));
@@ -29,7 +19,7 @@ Creatify.dom.Popouts.prototype = {
     },
     
     errorCheck: function() {
-        if ((document.getElementById('errorList') !== null || false) && (this.pod.hasClass('initHelp'))) {
+        if ((document.getElementById('errorList') !== null || false) && (this.container.hasClass('showHelpInstructions'))) {
             this.hideHelpInstructions();
             this.hideAllHelp();
         }
@@ -37,36 +27,40 @@ Creatify.dom.Popouts.prototype = {
         
     hideAllHelp: function() {
         var i, 
-            pods = Creatify.dom.Popouts.pods, 
-            len = pods.length; 
+            containerList = Creatify.homeMove.Popouts.containerList, 
+            len = containerList.length; 
         
         return (function(inst) {
             for (i = 0; i < len; i++) {
-                if (inst.pod[0] !== pods[i]) {
-                    $(pods[i]).removeClass('pod_active');
+                if (inst.container[0] !== containerList[i]) {
+                    $(containerList[i]).removeClass('showHelp');
                 }
-                $(pods[0]).removeClass('initHelp');
+                $(containerList[0]).removeClass('showHelpInstructions');
             }
         }(this));
 
     },
     
+    showHelpInstructions: function() {
+        this.container.addClass('showHelpInstructions');
+    },
+    
     hideHelpInstructions: function() {
-        this.pod.removeClass('initHelp');
+        this.container.removeClass('showHelpInstructions');
     },
     
     showThisHelp: function() {
         this.hideAllHelp();
-        this.pod.addClass('pod_active');
+        this.container.addClass('showHelp');
     },
     
     hideThisHelp: function() {
-        this.pod.removeClass('pod_active');
+        this.container.removeClass('showHelp');
     },
 
     
     toggleThisHelp: function(e) {
-        if (this.pod.hasClass('pod_active')) {
+        if (this.container.hasClass('showHelp')) {
             this.hideThisHelp();
         } else {
             this.showThisHelp();
@@ -81,26 +75,25 @@ Creatify.dom.Popouts.prototype = {
     }
         
 };
-
+	
 
 $(function() {
 	"use strict";
-
+	
 	var dom = Creatify.dom,
-	    i, 
-        containerList = {}, 
-        containers = $('.container'), 
-        len = containers.length;
-	
-	$(containers[0]).addClass('initHelp');
-	
+		i,
+		container,
+		containerList = [], 
+		containers = $('.containers'), 
+		len = containers.length;
+
 	for (i = 0; i < len; i++) {
-		if (typeof $(containers[i]).find('a.help') !== 'undefined') {
-			containerList[containers[i]] = new dom.Popouts(containers[i]);
-		}
+		container = containers[i];
+		if ($(container).has('a.help').length > 0) {	
+			containerList.push(new dom.Popouts(container));
+			containerList[0].showHelpInstructions();
+			containerList[0].errorCheck();
+		}		
 	}
 	
 });
-
-
-
