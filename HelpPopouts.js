@@ -1,7 +1,6 @@
 
 "use strict";
-
-Creatify.namespace('Creatify');
+var Creatify = Creatify || {};
 
 Creatify.namespace = function(ns, container) {
     var parts = ns.split('.'), i, len, parent = this;
