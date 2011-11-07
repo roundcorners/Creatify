@@ -1,6 +1,6 @@
-Creatify.homeMove.Popouts = function(container) {
+Creatify.dom.Popouts = function(container) {
     
-    Creatify.homeMove.Popouts.containerList.push(container);
+    Creatify.dom.Popouts.containerList.push(container);
     this.container = $(container);
     this.helpBtn = this.container.find('a.help').eq(0);
     this.inputs = this.container.find(':input:not(:image, :radio)');
@@ -8,9 +8,9 @@ Creatify.homeMove.Popouts = function(container) {
     this.setupEventListeners();
 };
 
-Creatify.homeMove.Popouts.containerList = [];
+Creatify.dom.Popouts.containerList = [];
 
-Creatify.homeMove.Popouts.prototype = {
+Creatify.dom.Popouts.prototype = {
         
     setupEventListeners: function() {
         this.helpBtn.bind('click', $.proxy(this.toggleThisHelp, this));
@@ -27,7 +27,7 @@ Creatify.homeMove.Popouts.prototype = {
         
     hideAllHelp: function() {
         var i, 
-            containerList = Creatify.homeMove.Popouts.containerList, 
+            containerList = Creatify.dom.Popouts.containerList, 
             len = containerList.length; 
         
         return (function(inst) {
