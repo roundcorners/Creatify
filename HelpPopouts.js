@@ -1,4 +1,3 @@
-
 "use strict";
 var Creatify = Creatify || {};
 
@@ -38,7 +37,7 @@ Creatify.dom.Popouts.pods = [];
 Creatify.dom.Popouts.prototype = {
         
     setupEventListeners: function() {
-        this.helpBtn.bind('click', $.proxy(this.toggleThisHelp, this));Creatify
+        this.helpBtn.bind('click', $.proxy(this.toggleThisHelp, this));
         this.inputs.bind('focus', $.proxy(this.showThisHelp, this));
         this.radios.bind('change', $.proxy(this.showThisHelp, this));
     },
