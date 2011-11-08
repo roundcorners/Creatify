@@ -100,10 +100,10 @@ Creatify.dom.Popout = function(container) {
 			container = containers[i];
 			if ($(container).has('a.help').length > 0) {	
 				containerList.push(new dom.Popout(container));
-				containerList[0].showHelpInstructions();
-				containerList[0].errorCheck();
 			}		
 		}
+		containerList[0].showHelpInstructions();
+		containerList[0].errorCheck();
 
 		window.onunload = function() {
 			for (j = 0; j < max; j++) {
